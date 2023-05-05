@@ -2,7 +2,7 @@
 
 import java.util.*;
 
-public class Recursion {
+public class l001_Basic_Recursion {
 public static void main( String[] args){
     
     ArrayList<String> res = new ArrayList<>();

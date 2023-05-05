@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Maze_Questions {
+public class l001_Basic_Maze_Questions {
 public static void main( String[] args){
     floodfillAlgo();
     }
@@ -249,6 +249,35 @@ public static int floodfillAlgo_multi(int sr, int sc, boolean[][] vis, int[][] d
 
 }
 
+// better way to write radius loop inside dir so to travel in straight line
+public static int floodFill_multi(int sr, int sc, boolean[][] vis, int[][] dir, String[] dirS,
+            ArrayList<String> ans, String psf) {
+        int n = vis.length, m = vis[0].length;
+
+        if (sr == n - 1 && sc == m - 1) {
+            ans.add(psf);
+            return 1;
+        }
+
+        int count = 0;
+        vis[sr][sc] = true;
+
+        for (int d = 0; d < dir.length; d++)
+            for (int rad = 1; rad <= Math.max(n, m); rad++) {
+                int r = sr + rad * dir[d][0];
+                int c = sc + rad * dir[d][1];
+
+                if (r >= 0 && c >= 0 && r < n && c < m) {
+                    if (!vis[r][c])
+                        count += floodFill_multi(r, c, vis, dir, dirS, ans, psf + dirS[d] + rad);
+                } else
+                    break;
+            }
+
+        vis[sr][sc] = false;
+        return count;
+    }
+
 
 
 // =============================== PRACTICE QUESTIONS ===========================================
@@ -300,7 +329,13 @@ class Rat_In_A_MAZE_Problem_1 {
 
 
 
+// ========================== LONGEST PATH/ SHORTEST PATH IN MATRIX ============================
 
+// withtout class its not possible 
+
+public static int longestPath(int sr, int sc, int[][] matrix, String psf){
+
+}
 
 
 
