@@ -10,14 +10,12 @@ public static void main( String[] args){
    //  for(int val : arr){
    // 	System.out.print(val+",");
    // }
-	int[] arr = {1 ,2 ,7 ,-4 ,3 ,2 ,-10 ,9 ,1};
+	// int[] arr = {1 ,2 ,7 ,-4 ,3 ,2 ,-10 ,9 ,1};
 	// selectionSort(arr);
    // bar_Chart();
 	int[] nums = {9,12,5,10,14,3,10};
 	// pivot(nums, 0, nums.length - 1);
-    long ans = 
-    System.out.println(print_Longest_subarray_with_Maximum_Sum(arr,arr.length));
-
+    
 
 }
 
@@ -440,6 +438,43 @@ class Solution
         }
         return maxSum;
         
+    }
+
+
+    // =================================REARRANGE POSITVES AND NEGATIVES ===================================
+    void rearrange(int arr[], int n) {
+        // code here
+        ArrayList<Integer> pos = new ArrayList<>();
+        ArrayList<Integer> nega = new ArrayList<>();
+        for( int val : arr){
+            if( val < 0) nega.add(val);
+            else pos.add(val);
+        }
+         if( pos.size() > nega.size()){
+             
+             for(int i = 0 ; i < nega.size() ; i++){
+                 arr[2*i] = pos.get(i);
+                 arr[2*i+1] = nega.get(i);
+             }
+             // now positives are left to be filled
+             int index = nega.size() * 2; // from this index we need to fill positves
+             for( int i = nega.size() ; i < pos.size() ; i++){
+                 arr[index] = pos.get(i);
+                 index++;
+             }
+         }else{
+             // exactly similar code for negative ,--> pos and neg gets interchanges
+              for(int i = 0 ; i < pos.size() ; i++){
+                 arr[2*i] = pos.get(i);
+                 arr[2*i+1] = nega.get(i);
+             }
+             // now positives are left to be filled
+             int index = pos.size() * 2; // from this index we need to fill positves
+             for( int i = pos.size() ; i < nega.size() ; i++){
+                 arr[index] = nega.get(i);
+                 index++;
+             }
+         }
     }
 
 

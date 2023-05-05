@@ -6,9 +6,9 @@ public static void main( String[] args){
         String str = "abaaaacd";
         // to sort string convert it into char array first
         // System.out.println(str);
-        UNIQUE_PERMUTATIONS obj = new UNIQUE_PERMUTATIONS();
         // System.out.println(obj.permutations_with_Boolean("aab",""));
-        System.out.println(string_Permutations("aab",""));
+        // System.out.println(string_Permutations("aab",""));
+        recusive_Permutations_Array();
     }
 
 
@@ -48,7 +48,7 @@ public static int equalSet(int[] arr, int idx, int sum1, int sum2, String set1, 
         for( int i = 0 ; i < str.length() ; i++){
             char ch = str.charAt(i);
             String ros = str.substring(0,i) + str.substring(i+1);
-            count +=string_Permutations(ros,ans + ch);
+            count +=string_Permutations_ALL(ros,ans + ch);
         }
         return count;
 
@@ -56,7 +56,7 @@ public static int equalSet(int[] arr, int idx, int sum1, int sum2, String set1, 
 
     // GENERATES ALL UNIQUE PERMUTATIONS ( 2. METHODS )
 
-   static class UNIQUE_PERMUTATIONS {
+   static class UNIQUE_PERMUTATIONS_OF_String {
 
     // NOT IN PREV AND CURR METHOD STRING SHOULD BE SORTED
    public static int permutationsUniqueWithSorting( String str, String ans, List<String> res) {
@@ -97,6 +97,7 @@ public static int equalSet(int[] arr, int idx, int sum1, int sum2, String set1, 
     }
     return count;
   }
+  
   public List<String> permutationsUniqueWithSorting(String S) {
         // Code here
         List<String> ans = new ArrayList<>();
@@ -105,6 +106,85 @@ public static int equalSet(int[] arr, int idx, int sum1, int sum2, String set1, 
         String s = new String(tempArray);
         permutationsUniqueWithSorting(s,"",ans);
         return ans;
+    }
+}
+
+// permuation of array -> STRIVER  ----> similar for string permutations
+  public static int recusive_Permutations(int[] arr, ArrayList<Integer> ds, ArrayList<ArrayList<Integer>> ans, boolean[] freq){
+      if( ds.size() == arr.length){
+        ans.add(new ArrayList<>(ds));
+        return 1;
+      }
+      int count = 0;
+      for( int i = 0 ; i < arr.length ; i++){
+        if(!freq[i]){
+            // mark add call then remove and unmark
+            freq[i] = true;
+            ds.add(arr[i]);
+            count += recusive_Permutations(arr,ds,ans,freq);
+            ds.remove(ds.size()-1);
+            freq[i] = false;
+        }
+      }
+      return count;
+  }
+  public static void recusive_Permutations_Array(){
+    int[] arr = {1,2,3};
+    boolean[] freq = new boolean[arr.length];
+    ArrayList<ArrayList<Integer>> ans = new ArrayList<>();
+    ArrayList<Integer> ds = new ArrayList<>();
+    System.out.println(recusive_Permutations(arr, ds, ans, freq));
+    for( ArrayList<Integer> list : ans){
+        for( int val : list){
+            System.out.print(val + ",");
+        }
+        System.out.println();
+    }
+    
+  }
+
+
+  // ========================================= NEXT PERMUTATION ===============================
+  class NEXT_PERMUTATION{
+    public static void swap(List<Integer> arr, int i, int j){
+        int temp = arr.get(i);
+        arr.set(i,arr.get(j));
+        arr.set(j,temp);
+    }
+    public static void reverse(List<Integer> arr, int low, int high){
+        while( low < high){
+            swap(arr,low, high);
+            low++;
+            high--;
+        }
+    }
+    static List<Integer> nextPermutation(int N, int arr[]){
+        // code here
+        ArrayList<Integer> A = new ArrayList<Integer>();
+        for( int val : arr) A.add(val);
+        int index = -1;
+        int n = A.size();
+        // starting from n-2 that could be a possible breakpoint
+        for(int i = n-2 ; i >= 0 ; i-- ){
+            if( A.get(i) < A.get(i+1)){
+                index = i;
+                break;
+            }
+        }
+        if( index == -1){ // means array is sorted in decreasing order so just reverse
+        Collections.reverse(A);
+        return A;
+        }
+        for( int i = n-1 ; i >= 0 ; i--){
+            if( A.get(i) > A.get(index)){
+                swap(A,i,index);
+                break;
+            }
+        }
+        // now just reverse from index + 1 to last
+        reverse(A,index + 1, n-1);
+        return A;
+
     }
 }
 
