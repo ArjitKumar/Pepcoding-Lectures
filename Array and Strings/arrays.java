@@ -10,11 +10,14 @@ public static void main( String[] args){
    //  for(int val : arr){
    // 	System.out.print(val+",");
    // }
-	int[] arr = {13,46,24,52,20,9};
+	int[] arr = {1 ,2 ,7 ,-4 ,3 ,2 ,-10 ,9 ,1};
 	// selectionSort(arr);
    // bar_Chart();
 	int[] nums = {9,12,5,10,14,3,10};
-	pivot(nums, 0, nums.length - 1);
+	// pivot(nums, 0, nums.length - 1);
+    long ans = 
+    System.out.println(print_Longest_subarray_with_Maximum_Sum(arr,arr.length));
+
 
 }
 
@@ -384,6 +387,60 @@ class Solution
         return list;
     }
 }
+
+ // ============================== KADANES ALGO ================================================
+ public static long maxSubarraySum(int arr[], int N){
+        
+        // Your code here
+        long maxSum = -(long)1e9;
+        long sum = 0;
+        for( int i = 0 ; i < N ; i++){
+           // ate hi sum add kro
+           sum += arr[i];
+           
+           // in the middle compare
+           if( sum > maxSum){
+               maxSum = sum;
+           }
+           
+           //jate waqt check agar sum < 0 h to sum = 0  krdo
+           if( sum < 0){
+               sum = 0;
+           }
+        }
+        return maxSum;
+        
+    }
+    // for finding subarray same code just three more variable required
+    public static long print_Longest_subarray_with_Maximum_Sum(int arr[], int N){
+        
+        // Your code here
+        long maxSum = -(long)1e9;
+        long sum = 0;
+        int start = 0, ansStart = -1, ansEnd = -1;
+        for( int i = 0 ; i < N ; i++){
+           // ate hi sum add kro
+            if( sum == 0) start = i; // starting point of new subarray
+           sum += arr[i];
+           
+           // in the middle compare
+           if( sum > maxSum){
+               maxSum = sum;
+               ansStart = start;
+               ansEnd = i;
+           }
+           
+           //jate waqt check agar sum < 0 h to sum = 0  krdo
+           if( sum < 0){
+               sum = 0;
+           }
+        }
+        for( int i = ansStart ; i <= ansEnd ; i++){
+            System.out.print(arr[i] + " ");
+        }
+        return maxSum;
+        
+    }
 
 
 
